@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>    
+</body>
+
+<script>
+
+    //global variables regarding player scores
+    let playerScore = 0;
+    let computerScore = 0;
+    //constant global variable for win condition
+    const winCondition = 3;
+    let gameCnt;
+/*Function to generate computers choice*/
+ function getComputerChoice()
+ {
+   var choicesArray = ["Rock","Paper", "Scissors"];
+   var computerSelection = Math.floor(Math.random()*choicesArray.length); 
+   var computerChoice = "";
+   //Conditional statements for randomised variable result to return necessary strings
+   if(computerSelection === 1)
+   {
+    return computerChoice = "rock";
+   }
+   else if(computerChoice === 2)
+   {
+    return computerChoice = "paper";
+   }
+   else
+   {
+    return computerChoice = "scissors";
+   }   
+ }
+
+ //Function that gets the users choice
+ function getPlayerChoice()
+ {
+    //Error message variable
+    let errormessage = "It appears you have not entered an invalid option...Please write of the following options 'rock', 'paper', or 'scissors'";
+    //Ask the user for their choice(rock, paper or scissors)
+    let userSelection = prompt("Please pick your hand to play...rock paper or scissors?");
+    //Make user input case insensitive
+    userSelection.toLowerCase();
+    //User input checks for validity using OR operand
+    /*
+    if(userSelection != "rock" || userSelection!= "paper" || userSelection != "scissors"){
+      return errormessage;
+    }
+    else
+    {
+      */
+      //return the users choice
+      return userSelection;
+   // }
+ }
+
+//function that plays the game taking two parameters
+ function playRound(playerSelection, computerSelection)
+ {
+  var winnerMessage = "";  
+  //Make playerSelection Case Insensitive
+  playerSelection.toLowerCase();
+
+  //conditional checks to determine winner
+  if(playerSelection === "rock" && computerSelection ==="scissors")
+  {
+    playerScore++;
+    return winnerMessage = "You Win! Rock beats scissors";
+  }
+  else if(playerSelection === "rock" && computerSelection ==="paper")
+  {
+    computerScore ++;
+    return winnerMessage = "You lose! Paper beats Rock";
+  }
+  else if(playerSelection === "rock" && computerSelection ==="rock")
+  {
+    return winnerMessage = "Tie! Please pick again of one of the three options"
+  }
+  else if(playerSelection ==="paper" && computerSelection === "rock")
+  {
+    playerScore++;
+    return winnerMessage = "You Win! Paper beats Rock";
+  }
+  else if(playerSelection ==="paper" && computerSelection ==="scissors")
+  {
+    computerScore++;
+    return winnerMessage = "You Lose! Scissors beat Paper";
+  }
+  else if(playerSelection ==="paper" && computerSelection === "paper")
+  {
+    return winnerMessage = "Tie! Please prepare to pick again";
+  }
+  else if(playerSelection ==="scissors" && computerSelection ==="rock")
+  {
+    computerScore++;
+    return winnerMessage = "You Lose! Rock beats Scissors";
+  }
+  else if(playerSelection === "scissors" && computerSelection ==="paper")
+  {
+    playerScore++;
+    return winnerMessage = "You Win! Scissors beat Paper";
+  }
+  else if(playerSelection === "scissors" && computerSelection === "scissors")
+  {
+    return winnerMessage = "Tie! Prepare to pick again";
+  }
+  else
+  {
+    return errormessage = "it appears that one or both of the values presented are invalid"
+  }
+ }
+
+ //Function that checks for a winner
+ function checkForWinner()
+ {
+  let gameWinnerMessage = "";
+  let gameUpdateMsg = "";
+    
+    if(playerScore === winCondition)
+     {
+       return gameWinnerMessage = "You have Won! This best of 5 game of Rock Paper and Scissors";
+     }
+     else if(computerScore === winCondition)
+     {
+       return gameWinnerMessage = "You have Lost! Unfortunately the computer seems to be luckier than you on this occasion"
+     }
+
+     
+     else if(playerScore === computerScore && playerScore < winCondition && computerScore < winCondition && gameCnt != 5)
+     {
+      return gameWinnerMessage = "The game ends in a tie";
+     }
+
+     else
+     {
+      return gameUpdateMsg = "Play next round";
+     }
+ }
+
+ function game()
+ {   
+    for(gameCnt = 0; gameCnt < 5; gameCnt++)
+    {
+      //Placing constant variables in for loop to ensure they user is asked for a new response each round and subsequently the computer generates a new random answer
+      const computerSelection = getComputerChoice();
+      const playerSelection = getPlayerChoice(); 
+
+      //call to playRound function to simulate 5 rounds being played in a for loop
+      console.log(playRound(playerSelection,computerSelection));
+      //call to checkWinCondition function so that for every round the game checks if a winner has been crowned
+      console.log(checkForWinner());
+    }
+  }
+</script>
+</html>
