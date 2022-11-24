@@ -1,0 +1,182 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>    
+      <div class="container">
+        <div id="result">
+                  
+        </div>
+        <!--Create three buttons
+        -One of each selection: rock,paper, scissors
+        -Add an event listener to the buttons that call the playRound function--> 
+        <div class="rock-container">
+         <img style="width:15%; height:auto;" id="rock" src="pictures/rps-rock.png">
+         <button data-key="rockBut" id="rock">Rock</button>
+        </div>
+        <div class="paper-container">
+         <img style="width:15%; height:auto;" id="paper" src="pictures/rps-paper.png"> 
+         <button data-key="paperBut" id="paper">Paper</button>
+        </div>
+        <div class="scissors-container">
+         <img style="width:15%; height:auto;" id="scissors" src="pictures/rps-scissors.png">
+         <button data-key="scissorsBut" id="scissors">Scissors</button>
+        </div>
+      </div>
+      <div id="announcements">
+        <h5> </h5>
+      </div>
+      
+</body>
+
+<script>
+
+  //global variables regarding player scores
+  let playerScore = 0;
+  let computerScore = 0;
+  //constant global variable for win condition
+  const winCondition = 5;
+  let gameCnt;
+  let playerSelection;
+  let computerSelection;
+  const btns = document.querySelectorAll('button');
+  const result = document.querySelector('#result');
+  const winnerAnnouncement = document.querySelector('#announcements');
+  //const score = document.createElement('h5');
+
+  //Add event listener to the buttons that call your playRound function
+  btns.forEach((button) =>{
+    button.addEventListener('click', () => {
+      playerSelection = button.id;
+      computerSelection = getComputerChoice();
+      console.log(playRound(playerSelection,computerSelection));
+      checkForWinner();
+      updateScore();
+    })
+  })
+  
+  function updateScore(){
+    
+    result.textContent = "Player Score: "+ playerScore + 
+    "\nComputer Score: " + computerScore;
+    //result.appendChild(score);
+  }
+
+/*Function to generate computers choice*/
+function getComputerChoice()
+{
+ var choicesArray = ["Rock","Paper", "Scissors"];
+ var computerSelection = Math.floor(Math.random()*choicesArray.length); 
+ var computerChoice = "";
+ //Conditional statements for randomised variable result to return necessary strings
+ if(computerSelection === 1)
+ {
+  return computerChoice = "rock";
+ }
+ else if(computerChoice === 2)
+ {
+  return computerChoice = "paper";
+ }
+ else
+ {
+  return computerChoice = "scissors";
+ }   
+}
+
+//function that plays the game taking two parameters
+function playRound(playerSelection, computerSelection)
+{
+var winnerMessage = "";  
+//Make playerSelection Case Insensitive
+playerSelection.toLowerCase();
+
+//conditional checks to determine winner
+if(playerSelection === "rock" && computerSelection ==="scissors")
+{
+  playerScore++;
+  return winnerMessage = "You Win! Rock beats scissors";
+}
+else if(playerSelection === "rock" && computerSelection ==="paper")
+{
+  computerScore ++;
+  return winnerMessage = "You lose! Paper beats Rock";
+}
+else if(playerSelection === "rock" && computerSelection ==="rock")
+{
+  return winnerMessage = "Tie! Please pick again of one of the three options"
+}
+else if(playerSelection ==="paper" && computerSelection === "rock")
+{
+  playerScore++;
+  return winnerMessage = "You Win! Paper beats Rock";
+}
+else if(playerSelection ==="paper" && computerSelection ==="scissors")
+{
+  computerScore++;
+  return winnerMessage = "You Lose! Scissors beat Paper";
+}
+else if(playerSelection ==="paper" && computerSelection === "paper")
+{
+  return winnerMessage = "Tie! Please prepare to pick again";
+}
+else if(playerSelection ==="scissors" && computerSelection ==="rock")
+{
+  computerScore++;
+  return winnerMessage = "You Lose! Rock beats Scissors";
+}
+else if(playerSelection === "scissors" && computerSelection ==="paper")
+{
+  playerScore++;
+  return winnerMessage = "You Win! Scissors beat Paper";
+}
+else if(playerSelection === "scissors" && computerSelection === "scissors")
+{
+  return winnerMessage = "Tie! Prepare to pick again";
+}
+else
+{
+  return errormessage = "it appears that one or both of the values presented are invalid"
+}
+}
+
+//Function that checks for a winner
+function checkForWinner()
+{
+let gameWinnerMessage = "";
+let gameUpdateMsg = "";
+const announcement = document.querySelector('#announcements');  
+  if(playerScore === winCondition)
+   {
+     //Turn into DOM method(manipulate the dom to show text rather than in the console)
+     announcement.textContent = "You have Won! This best of 5 game of Rock Paper and Scissors";
+   }
+   else if(computerScore === winCondition)
+   {
+    announcement.textContent = "You have Lost! Unfortunately the computer seems to be luckier than you on this occasion";
+   }
+   else
+   {
+    announcement.textContent = "Play next round";
+   }
+}
+
+function game()
+{ 
+    //Remove logic that plays exactly five rounds(for loop)
+
+    //Placing constant variables in for loop to ensure they user is asked for a new response each round and subsequently the computer generates a new random answer
+    const computerSelection = getComputerChoice();
+    const playerSelection = getPlayerChoice(); 
+
+    //call to playRound function to simulate 5 rounds being played in a for loop
+    console.log(playRound(playerSelection,computerSelection));
+    //call to checkWinCondition function so that for every round the game checks if a winner has been crowned
+    console.log(checkForWinner());
+}
+</script>
+</html>
